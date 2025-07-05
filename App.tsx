@@ -33,7 +33,8 @@ const App: React.FC = () => {
       setItems(extractedItems);
       setAppState(AppState.EDITING);
     } catch (err) {
-      setError('Error al procesar el recibo. Por favor, inténtalo de nuevo o introduce los artículos manualmente.');
+      const errorMessage = err instanceof Error ? err.message : 'Ocurrió un error desconocido.';
+      setError(errorMessage);
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -61,7 +62,7 @@ const App: React.FC = () => {
     if (error) {
        return (
         <div className="flex flex-col items-center justify-center h-full pt-10 text-center">
-          <p className="text-red-500">{error}</p>
+          <p className="text-red-500 font-semibold">{error}</p>
           <button
             onClick={handleStartOver}
             className="mt-4 px-6 py-2 bg-primary-light text-white rounded-lg shadow-md hover:bg-primary-light/90 dark:bg-primary-dark dark:hover:bg-primary-dark/90 transition-colors"
